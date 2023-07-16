@@ -94,6 +94,31 @@ public class Panel extends JPanel implements ActionListener {
     }
 
     public void checkCollisions() {
+        //did the head collide with the body
+        for(int i = bodyParts; i > 0; i--) {
+            if((x[0] == x[i]) && (y[0] == y[i])) {
+                running = false;
+            }
+        }
+        //did head collide with left border
+        if(x[0] < 0) {
+            running = false;
+        }
+        //did head collide with right border
+        if (x[0] > SCREEN_WIDTH) {
+            running = false;
+        }
+        //did head collide with top border
+        if (y[0] < 0) {
+            running = false;
+        }
+        //did head collide with bottom border
+        if (y[0] > SCREEN_HEIGHT) {
+            running = false;
+        }
+        if(!running) {
+            timer.stop();
+        }
 
     }
 
