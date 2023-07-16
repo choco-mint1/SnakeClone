@@ -49,6 +49,16 @@ public class Panel extends JPanel implements ActionListener {
         }
         g.setColor(Color.red);
         g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+
+        for(int i = 0; i < bodyParts; i++) {
+            if (i == 0) {
+                g.setColor(Color.green);
+                g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+            } else {
+                g.setColor(new Color(33, 73, 12, 255));
+                g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+            }
+        }
     }
 
     public void newApple() {
@@ -92,7 +102,12 @@ public class Panel extends JPanel implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(running) {
+            move();
+            checkApple();
+            checkCollisions();
+        }
+        repaint();
     }
  public class MyKeyAdapter extends KeyAdapter{
 
