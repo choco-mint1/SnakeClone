@@ -43,24 +43,34 @@ public class Panel extends JPanel implements ActionListener {
 
     public void draw(Graphics g) {
 
-        for(int i = 0; i < SCREEN_HEIGHT/UNIT_SIZE; i++) {
-            g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
-            g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
-        }
-        g.setColor(Color.red);
-        g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+        if (running) {
 
-        for(int i = 0; i < bodyParts; i++) {
-            if (i == 0) {
-                g.setColor(Color.green);
-                g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
-            } else {
-                g.setColor(new Color(33, 73, 12, 255));
-                g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+          /*  for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
+                g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
+                g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
+           */
+            g.setColor(Color.red);
+            g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+
+            for (int i = 0; i < bodyParts; i++) {
+                if (i == 0) {
+                    g.setColor(Color.green);
+                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                } else {
+                    g.setColor(new Color(33, 73, 12, 255));
+                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                }
+            }
+            g.setColor(Color.GREEN);
+            g.setFont( new Font("Impact", Font.ITALIC, 40));
+            FontMetrics metrics = getFontMetrics(g.getFont());
+            g.drawString("SCORE: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("SCORE: " + applesEaten))/2, g.getFont().getSize());
+        }
+        else {
+            gameOver(g);
         }
     }
-
     public void newApple() {
         appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE)) * UNIT_SIZE;
         appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE)) * UNIT_SIZE;
@@ -127,7 +137,19 @@ public class Panel extends JPanel implements ActionListener {
     }
 
     public void gameOver(Graphics g) {
+        //Score on game over screen
+        g.setColor(Color.GREEN);
+        g.setFont( new Font("Impact", Font.ITALIC, 40));
+        FontMetrics metricsScore = getFontMetrics(g.getFont());
+        g.drawString("SCORE: " + applesEaten, (SCREEN_WIDTH - metricsScore.stringWidth("SCORE: " + applesEaten))/2, g.getFont().getSize());
 
+
+
+        //Game over scree
+        g.setColor(Color.GREEN);
+        g.setFont( new Font("Impact", Font.ITALIC, 75));
+        FontMetrics metricsGameOver = getFontMetrics(g.getFont());
+        g.drawString("GAME OVER", (SCREEN_WIDTH - metricsGameOver.stringWidth("GAME OVER"))/2, SCREEN_HEIGHT/2);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
